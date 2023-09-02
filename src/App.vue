@@ -1,6 +1,8 @@
 <script setup>
   import {ref } from "vue";
   import LoadingSpinner from "./components/LoadingSpinner.vue"
+  import RegistrosChecador from "./components/RegistrosChecador.vue"
+  const sucursal = ref()
   const loading = ref(false)
   const fecha = new Date();
   const fechaact = fecha.getDate() + "-" + (fecha.getMonth() + 1)
@@ -32,21 +34,24 @@
     console.log("si le diste");
     fetch('http://192.168.12.173:1619/Assist/public/api/Monday/justification')
       .then(res => res.json())
-      .then(data => alert(data))
+      .then(data => console.log(data))
       .finally(() =>loading.value = false)
   }
   function ultche(){ 
       loading.value=true
     console.log("si le diste");
     fetch('http://192.168.12.173:1619/Assist/public/api/zkt/Reportcomplete')
-      .then(res => res)
-      // .then(data => alert(data))
+      .then(res => res.json())
+      .then((data) => {
+        sucursal.value = data
+        console.log(sucursal.value)
+      })
       .finally(() =>loading.value = false)
   }
 </script>
 <template>
   <LoadingSpinner v-if="loading" />
-  <div class="container" v-else>
+  <div class="container text-center" v-else>
     <h1>Reporte de asistencias</h1>
 
     <br>
@@ -57,5 +62,16 @@
       <br>
       <button @click="ultche" type="button" class="btn btn-outline-primary" > Replicar Ult checadas</button>
     </div>
+    <RegistrosChecador 
+    class="mt-4" 
+    v-for=" regis in sucursal "  
+    :key="regis.id" 
+    :id="regis.id" 
+    :sucursal= "regis.sucursal" 
+    :conexion="regis.conexion" 
+    :registroes="regis.registroes"
+    />
+
   </div>
+
 </template>
