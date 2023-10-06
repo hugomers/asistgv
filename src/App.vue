@@ -9,7 +9,7 @@
   function descarga() {
     loading.value = true;
     console.log("si le diste");
-    fetch('http://192.168.12.173:1619/Assist/public/api/assist/report')
+    fetch('http://192.168.10.61:1619/Assist/public/api/assist/report')
       .then(res => {
         if (!res.ok) {
           throw new Error('Network response was not ok');
@@ -32,7 +32,7 @@
   function Justificaciones(){
     loading.value=true
     console.log("si le diste");
-    fetch('http://192.168.12.173:1619/Assist/public/api/Monday/justification')
+    fetch('http://192.168.10.61:1619/Assist/public/api/Monday/justification')
       .then(res => res.json())
       .then(data => console.log(data))
       .finally(() =>loading.value = false)
@@ -40,7 +40,7 @@
   function ultche(){ 
       loading.value=true
     console.log("si le diste");
-    fetch('http://192.168.12.173:1619/Assist/public/api/zkt/Reportcomplete')
+    fetch('http://192.168.10.61:1619/Assist/public/api/zkt/Reportcomplete')
       .then(res => res.json())
       .then((data) => {
         sucursal.value = data
